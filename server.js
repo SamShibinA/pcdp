@@ -7,14 +7,32 @@ const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 app.use(express.json({ limit: '100kb' }));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname)));
+app.use(express.static(process.cwd()));
+
+function findFile(filename) {
+  const candidates = [
+    path.join(__dirname, filename),
+    path.join(process.cwd(), filename),
+    path.join(__dirname, '..', filename)
+  ];
+  for (const c of candidates) {
+    if (fs.existsSync(c)) return c;
+  }
+  return path.join(__dirname, filename);
+}
+
+// Ensure GET / always serves index.html
+app.get('/', (req, res) => {
+  res.sendFile(findFile('index.html'));
+});
 
 let memoryLeaves = null;
 
 function readLeaves() {
   if (memoryLeaves) return memoryLeaves;
   try {
-    const raw = fs.readFileSync(DATA_FILE, 'utf8');
+    const raw = fs.readFileSync(findFile('data.json'), 'utf8');
     memoryLeaves = JSON.parse(raw);
     return memoryLeaves;
   } catch (err) {
@@ -25,9 +43,8 @@ function readLeaves() {
 function writeLeaves(items) {
   memoryLeaves = items;
   try {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(items, null, 2), 'utf8');
+    fs.writeFileSync(findFile('data.json'), JSON.stringify(items, null, 2), 'utf8');
   } catch (err) {
-    // Read-only filesystem on Vercel / serverless
     console.warn('Filesystem is read-only, updated in-memory state.');
   }
 }
@@ -105,6 +122,11 @@ app.post('/api/leaves', (req, res) => {
   leaves.unshift(newLeave);
   writeLeaves(leaves);
   res.status(201).json(leaves);
+});
+
+// Fallback for any other route
+app.get('*', (req, res) => {
+  res.sendFile(findFile('index.html'));
 });
 
 module.exports = app;
