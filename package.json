@@ -1,0 +1,12 @@
+{
+  "name": "pcdp-leave-replica",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mobile-responsive PCDP Portal leave page replica with JSON file persistence",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

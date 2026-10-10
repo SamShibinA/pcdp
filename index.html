@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PCDP Portal — My Leaves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-purple: #7052f5;
+  --primary-purple-hover: #5e3fe3;
+  --primary-purple-light: #ece7ff;
+  --status-approved: #0b8a2e;
+  --status-pending: #e9a844;
+  --status-cancel: #f95a5a;
+  --bg-page: #f2f4fa;
+  --bg-input: #f0f3fa;
+  --border-input: #dce2ee;
+  --text-dark: #111827;
+  --text-heading: #4b556b;
+  --text-muted: #6b7280;
+  --text-label: #374151;
+  --border-subtle: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-page);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-dark);
+  font-size: 15px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+}
+
+
+
+/* Top App Header */
+.topbar {
+  height: 62px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.hamb-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20px;
+  height: 15px;
+  padding: 0;
+}
+.hamb-btn span {
+  display: block;
+  height: 2.5px;
+  background: #111827;
+  border-radius: 2px;
+  width: 100%;
+}
+.brand-name {
+  font-size: 19px;
+  font-weight: 600;
+  color: #111827;
+  margin-left: 18px;
+  letter-spacing: -0.2px;
+}
+.avatar-wrap {
+  margin-left: auto;
+  width: 38px;
+  height: 38px;
+  background: #edf1f8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.avatar-wrap:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+}
+.avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Main Content Area */
+.main-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 16px 120px;
+}
+
+.heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.heading-row h1 {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.3px;
+}
+.btn-apply {
+  background: var(--primary-purple);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(112, 82, 245, 0.25);
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn-apply:hover {
+  background: var(--primary-purple-hover);
+}
+.btn-apply:active {
+  transform: scale(0.98);
+}
+
+/* Search Card */
+.search-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 14px 16px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.search-card label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+.search-input-wrap {
+  width: 100%;
+}
+.search-input-wrap input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.search-input-wrap input:focus {
+  border-color: var(--primary-purple);
+}
+.search-input-wrap input::placeholder {
+  color: #9ca3af;
+}
+
+/* Data Table Card */
+.table-card {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+thead th {
+  background: #ffffff;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 16px 14px;
+  border-bottom: 1px solid #edf0f5;
+  user-select: none;
+}
+.th-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-icon-btn {
+  background: #f1f4f9;
+  border: none;
+  border-radius: 6px;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #8a94a6;
+  padding: 0;
+}
+.filter-icon-btn:hover {
+  background: #e5eaf2;
+  color: #4b5563;
+}
+tbody tr {
+  border-bottom: 1px solid #edf0f5;
+  transition: background 0.1s ease;
+  cursor: pointer;
+}
+tbody tr:hover {
+  background: #fbfcfe;
+}
+tbody td {
+  padding: 16px 14px;
+  font-size: 14px;
+  color: #1f2937;
+  vertical-align: middle;
+}
+
+/* Cell contents */
+.leave-type-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #111827;
+}
+.chevron-icon {
+  color: #9ca3af;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Pills & Badges */
+.pill {
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 16px;
+  line-height: 1;
+}
+.pill-status {
+  padding: 6px 18px;
+  font-size: 13px;
+  color: #ffffff;
+  min-width: 96px;
+}
+.pill-status.approved,
+.pill-status.completed {
+  background: var(--status-approved);
+}
+.pill-status.pending {
+  background: var(--status-pending);
+}
+
+.pill-type-od {
+  background: var(--status-approved);
+  color: #ffffff;
+  padding: 4px 14px;
+  font-size: 12.5px;
+  border-radius: 14px;
+}
+.pill-type-leave {
+  background: #3b82f6;
+  color: #ffffff;
+  padding: 4px 14px;
+  font-size: 12.5px;
+  border-radius: 14px;
+}
+
+.empty-state {
+  padding: 40px 16px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Floating Headphone Support Button */
+.support-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 82px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--primary-purple);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(112, 82, 245, 0.4);
+  cursor: pointer;
+  z-index: 40;
+  border: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.support-fab:hover {
+  background: var(--primary-purple-hover);
+  transform: scale(1.05);
+}
+.support-fab:active {
+  transform: scale(0.95);
+}
+
+/* Bottom Navigation Capsule */
+.bottom-nav {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border-radius: 30px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  z-index: 35;
+}
+.nav-pill-btn {
+  height: 44px;
+  width: 54px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.15s ease;
+}
+.nav-pill-btn.home-active {
+  background: var(--primary-purple-light);
+  color: var(--primary-purple);
+}
+.nav-pill-btn.add-btn {
+  border: 1.5px dashed #b8a6fa;
+  color: var(--primary-purple);
+  background: #ffffff;
+}
+.nav-pill-btn.add-btn:hover {
+  background: #fbf9ff;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 50;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.open {
+  display: flex;
+}
+
+/* Shared Modal Box */
+.modal-box {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 86vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  padding: 22px 20px 24px;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.modal-box::-webkit-scrollbar {
+  width: 4.5px;
+}
+.modal-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-box::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.35;
+}
+.btn-close-modal {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 2px;
+}
+.btn-close-modal:hover {
+  color: #4b5563;
+}
+
+/* Leave Details Modal Styling */
+.section-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #111827;
+  margin: 18px 0 14px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 16px;
+  column-gap: 12px;
+}
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+.info-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-label);
+  margin-bottom: 4px;
+}
+.info-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  line-height: 1.35;
+}
+
+/* Approval Card in Modal */
+.approval-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.approval-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.approval-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+.approval-card-user {
+  font-size: 13.5px;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+.approval-card-approvedby {
+  font-size: 13.5px;
+  color: #111827;
+}
+.approval-card-approvedby strong {
+  font-weight: 600;
+}
+
+/* Apply Form Inputs */
+.form-field {
+  margin-bottom: 16px;
+}
+.form-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+.form-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 36px;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--primary-purple);
+}
+.form-field textarea {
+  resize: none;
+  min-height: 60px;
+}
+.dates-row, .times-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.date-input-wrap, .time-input-wrap {
+  position: relative;
+}
+.date-input-wrap input {
+  padding-right: 32px;
+}
+.date-input-wrap .cal-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #111827;
+  pointer-events: none;
+}
+.time-input-wrap .clock-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+/* Apply Modal Buttons */
+.form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 14px;
+  margin-top: 24px;
+}
+.btn-form-cancel {
+  background: var(--status-cancel);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  height: 56px;
+  font-size: 15.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
+}
+.btn-form-cancel:hover {
+  opacity: 0.92;
+}
+.btn-form-submit {
+  background: var(--primary-purple);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  height: 56px;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.25;
+  padding: 0 8px;
+  transition: background 0.15s ease;
+}
+.btn-form-submit:hover {
+  background: var(--primary-purple-hover);
+}
+
+/* Side Drawer Menu */
+.side-drawer {
+  position: fixed;
+  top: 62px;
+  left: -240px;
+  width: 240px;
+  height: calc(100vh - 62px);
+  background: #ffffff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.06);
+  z-index: 25;
+  transition: left 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+.side-drawer.open {
+  left: 0;
+}
+.drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  color: #4b5563;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14.5px;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+.drawer-item:hover,
+.drawer-item.active {
+  background: var(--primary-purple-light);
+  color: var(--primary-purple);
+}
+
+/* Toast Message */
+.toast-msg {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  z-index: 100;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.toast-msg.show {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  body {
+    background: #edf0f7;
+  }
+  .topbar {
+    max-width: 500px;
+    margin: 0 auto;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  .main-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--bg-page);
+    min-height: calc(100vh - 88px);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  }
+  .side-drawer {
+    left: calc(50% - 250px - 240px);
+  }
+  .side-drawer.open {
+    left: calc(50% - 250px);
+  }
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- App Top Header -->
+<header class="topbar">
+  <button class="hamb-btn" id="menuToggleBtn" aria-label="Open navigation menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="brand-name">PCDP Portal</div>
+  <div class="avatar-wrap">
+    <img src="avatar.png" alt="Student Profile Avatar" onerror="this.src='download (2).png'">
+  </div>
+</header>
+
+<!-- Side Drawer Menu -->
+<aside class="side-drawer" id="sideDrawer">
+  <div class="drawer-item active">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+    <span>Leaves</span>
+  </div>
+  <div class="drawer-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <span>Attendance</span>
+  </div>
+  <div class="drawer-item">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+    <span>OD Requests</span>
+  </div>
+</aside>
+
+<!-- Main Page Content -->
+<main class="main-wrapper">
+  <!-- Title & Apply Button -->
+  <div class="heading-row">
+    <h1>My Leaves</h1>
+    <button class="btn-apply" id="btnOpenApply">Apply Leave</button>
+  </div>
+
+  <!-- Search Card -->
+  <section class="search-card">
+    <label for="searchInput">Search</label>
+    <div class="search-input-wrap">
+      <input type="text" id="searchInput" placeholder="Search by leave type or remarks...">
+    </div>
+  </section>
+
+  <!-- Leaves Table Card -->
+  <section class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <div class="th-content">LEAVE TYPE</div>
+            </th>
+            <th>
+              <div class="th-content">TYPE</div>
+            </th>
+            <th>
+              <div class="th-content">FROM DATE</div>
+            </th>
+            <th>
+              <div class="th-content">TO DATE</div>
+            </th>
+            <th>
+              <div class="th-content">
+                <button class="filter-icon-btn" title="Filter duration">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                </button>
+                DURATION
+                <button class="filter-icon-btn" title="Filter remarks">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                </button>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">REMARKS</div>
+            </th>
+            <th>
+              <div class="th-content">PARENT STATUS</div>
+            </th>
+            <th>
+              <div class="th-content">STATUS</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Rows will be injected by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      No leave requests found.
+    </div>
+  </section>
+</main>
+
+<!-- Floating Purple Headphone Support Button -->
+<button class="support-fab" id="supportFab" aria-label="Support">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+  </svg>
+</button>
+
+<!-- Bottom Navigation Capsule -->
+<nav class="bottom-nav">
+  <button class="nav-pill-btn home-active" aria-label="Home">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+  </button>
+  <button class="nav-pill-btn add-btn" id="bottomNavAdd" aria-label="Add Leave">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+</nav>
+
+<!-- Modal 1: Leave Details Modal (Image 1 & 2) -->
+<div class="modal-overlay" id="detailsModalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modalDetailsTitle">Leave Details - OnDuty - Offcampus Placement</h2>
+      <button class="btn-close-modal" id="btnCloseDetails" aria-label="Close modal">×</button>
+    </div>
+
+    <!-- Section: Leave Information -->
+    <div class="section-title">Leave Information</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Leave Type</span>
+        <span class="info-value" id="detailLeaveType">OnDuty - Offcampus Placement</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Type</span>
+        <div><span class="pill pill-type-od" id="detailTypeBadge">OD</span></div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">From Date</span>
+        <span class="info-value" id="detailFromDate">Oct 7, 2026, 08:00 AM</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">To Date</span>
+        <span class="info-value" id="detailToDate">Oct 7, 2026, 05:00 PM</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Gate Out</span>
+        <span class="info-value" id="detailGateOut">-</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Gate In</span>
+        <span class="info-value" id="detailGateIn">-</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Duration</span>
+        <span class="info-value" id="detailDuration">1 day</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Status</span>
+        <div><span class="pill pill-status approved" id="detailStatusBadge">Approved</span></div>
+      </div>
+      <div class="info-item full-width">
+        <span class="info-label">Remarks</span>
+        <span class="info-value" id="detailRemarks">Placement drive for Codestax.Ai</span>
+      </div>
+    </div>
+
+    <!-- Section: Additional Details -->
+    <div class="section-title">Additional Details</div>
+    <div class="info-item" style="margin-bottom: 12px;">
+      <span class="info-label">Company Details</span>
+      <span class="info-value" id="detailCompany">Codestax.Ai</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Venue Details</span>
+      <span class="info-value" id="detailVenue">Hostel</span>
+    </div>
+
+    <!-- Section: Approval Status -->
+    <div class="section-title">Approval Status</div>
+    <div class="approval-card">
+      <div class="approval-card-top">
+        <span class="approval-card-title">Mentor</span>
+        <span class="pill pill-status approved" id="detailMentorBadge">Approved</span>
+      </div>
+      <div class="approval-card-user" id="detailMentorName">IT2078 - Mr.PRABHU P S</div>
+      <div class="approval-card-approvedby">Approved by: <span id="detailMentorApprovedBy">IT2078 - Mr.PRABHU P S</span></div>
+    </div>
+
+    <div class="approval-card">
+      <div class="approval-card-top">
+        <span class="approval-card-title">Hostel Warden</span>
+        <span class="pill pill-status approved" id="detailWardenBadge">Approved</span>
+      </div>
+      <div class="approval-card-user" id="detailWardenName">BT11243 - Karthik M G</div>
+      <div class="approval-card-approvedby">Approved by: <span id="detailWardenApprovedBy">BT11243 - Karthik M G</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: Apply for Leave Modal (Image 3) -->
+<div class="modal-overlay" id="applyModalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Apply for Leave</h2>
+      <button class="btn-close-modal" id="btnCloseApply" aria-label="Close modal">×</button>
+    </div>
+
+    <form id="applyForm">
+      <div class="form-field">
+        <label for="applyLeaveType">Leave Type</label>
+        <select id="applyLeaveType" required>
+          <option value="" disabled selected></option>
+          <option value="OnDuty - Offcampus Placement">OnDuty - Offcampus Placement</option>
+          <option value="Leave">Leave</option>
+          <option value="Medical Leave">Medical Leave</option>
+          <option value="Casual Leave">Casual Leave</option>
+        </select>
+      </div>
+
+      <!-- Dates Row -->
+      <div class="dates-row">
+        <div class="form-field">
+          <label for="applyFromDate">From Date</label>
+          <div class="date-input-wrap">
+            <input type="date" id="applyFromDate" required>
+            <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="applyToDate">To Date</label>
+          <div class="date-input-wrap">
+            <input type="date" id="applyToDate" required>
+            <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Times Row -->
+      <div class="times-row">
+        <div class="form-field">
+          <label for="applyFromTime">From Time</label>
+          <div class="time-input-wrap">
+            <input type="time" id="applyFromTime" value="08:00" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="applyToTime">To Time</label>
+          <div class="time-input-wrap">
+            <input type="time" id="applyToTime" value="17:00" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="applyRemarks">Remarks</label>
+        <input type="text" id="applyRemarks" placeholder="Enter reason for leave" required>
+      </div>
+
+      <div id="odExtraFields" style="display:none;">
+        <div class="form-field">
+          <label for="applyCompany">Company Details</label>
+          <input type="text" id="applyCompany" placeholder="e.g. Codestax.Ai" value="Codestax.Ai">
+        </div>
+        <div class="form-field">
+          <label for="applyVenue">Venue Details</label>
+          <input type="text" id="applyVenue" placeholder="e.g. Hostel" value="Hostel">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-form-cancel" id="btnCancelApply">Cancel</button>
+        <button type="submit" class="btn-form-submit">Submit<br>Leave Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Support Toast -->
+<div class="toast-msg" id="toastMsg"></div>
+
+<script>
+let leavesData = [];
+
+const tableBody = document.getElementById('tableBody');
+const emptyState = document.getElementById('emptyState');
+const searchInput = document.getElementById('searchInput');
+
+// Details Modal Elements
+const detailsModalOverlay = document.getElementById('detailsModalOverlay');
+const btnCloseDetails = document.getElementById('btnCloseDetails');
+const modalDetailsTitle = document.getElementById('modalDetailsTitle');
+const detailLeaveType = document.getElementById('detailLeaveType');
+const detailTypeBadge = document.getElementById('detailTypeBadge');
+const detailFromDate = document.getElementById('detailFromDate');
+const detailToDate = document.getElementById('detailToDate');
+const detailGateOut = document.getElementById('detailGateOut');
+const detailGateIn = document.getElementById('detailGateIn');
+const detailDuration = document.getElementById('detailDuration');
+const detailStatusBadge = document.getElementById('detailStatusBadge');
+const detailRemarks = document.getElementById('detailRemarks');
+const detailCompany = document.getElementById('detailCompany');
+const detailVenue = document.getElementById('detailVenue');
+const detailMentorName = document.getElementById('detailMentorName');
+const detailMentorApprovedBy = document.getElementById('detailMentorApprovedBy');
+const detailWardenName = document.getElementById('detailWardenName');
+const detailWardenApprovedBy = document.getElementById('detailWardenApprovedBy');
+
+// Apply Modal Elements
+const applyModalOverlay = document.getElementById('applyModalOverlay');
+const btnOpenApply = document.getElementById('btnOpenApply');
+const bottomNavAdd = document.getElementById('bottomNavAdd');
+const btnCloseApply = document.getElementById('btnCloseApply');
+const btnCancelApply = document.getElementById('btnCancelApply');
+const applyForm = document.getElementById('applyForm');
+const applyLeaveType = document.getElementById('applyLeaveType');
+const odExtraFields = document.getElementById('odExtraFields');
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toastMsg');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// Side Drawer Toggle
+const menuToggleBtn = document.getElementById('menuToggleBtn');
+const sideDrawer = document.getElementById('sideDrawer');
+menuToggleBtn.addEventListener('click', () => {
+  sideDrawer.classList.toggle('open');
+});
+
+// Close drawer if clicking outside
+document.addEventListener('click', (e) => {
+  if (!sideDrawer.contains(e.target) && !menuToggleBtn.contains(e.target)) {
+    sideDrawer.classList.remove('open');
+  }
+});
+
+// Toggle OD Extra fields in form
+applyLeaveType.addEventListener('change', (e) => {
+  if (e.target.value.toLowerCase().includes('onduty')) {
+    odExtraFields.style.display = 'block';
+  } else {
+    odExtraFields.style.display = 'none';
+  }
+});
+
+// Format Datetime helper
+function formatDateTime(dateStr, timeStr) {
+  if (!dateStr) return '';
+  const time = timeStr || '08:00';
+  const parts = time.split(':');
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setHours(parseInt(parts[0] || '8', 10), parseInt(parts[1] || '0', 10));
+  if (isNaN(d.getTime())) return dateStr;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = months[d.getMonth()];
+  const day = d.getDate();
+  const year = d.getFullYear();
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const formattedHours = String(hours).padStart(2, '0');
+  return `${month} ${day}, ${year}, ${formattedHours}:${minutes} ${ampm}`;
+}
+
+// Fetch Leaves Data
+async function loadLeaves() {
+  try {
+    const res = await fetch('/api/leaves');
+    if (!res.ok) throw new Error();
+    leavesData = await res.json();
+  } catch (err) {
+    leavesData = [
+      {
+        id: "1",
+        leaveType: "OnDuty - Offcampus Placement",
+        type: "OD",
+        displayFrom: "Oct 7, 2026, 08:00 AM",
+        displayTo: "Oct 7, 2026, 05:00 PM",
+        duration: "1 day",
+        remarks: "Placement drive for Codestax.Ai",
+        company: "Codestax.Ai",
+        venue: "Hostel",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Pending",
+        status: "Approved",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "2",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Sep 26, 2026, 05:58 PM",
+        displayTo: "Oct 7, 2026, 06:00 PM",
+        duration: "11 days",
+        remarks: "Going to hometown for festival",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Pending",
+        status: "Completed",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "3",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Sep 23, 2026, 10:20 PM",
+        displayTo: "Sep 26, 2026, 08:00 PM",
+        duration: "3 days",
+        remarks: "Going home for family function",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Approved",
+        status: "Completed",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "4",
+        leaveType: "OnDuty - Offcampus Placement",
+        type: "OD",
+        displayFrom: "Sep 18, 2026, 08:30 AM",
+        displayTo: "Sep 18, 2026, 05:30 PM",
+        duration: "1 day",
+        remarks: "Placement drive for Zoho",
+        company: "Zoho Corporation",
+        venue: "Campus Placement Cell",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Pending",
+        status: "Approved",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "5",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Sep 10, 2026, 06:00 PM",
+        displayTo: "Sep 17, 2026, 08:00 PM",
+        duration: "7 days",
+        remarks: "Medical leave due to viral fever",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Approved",
+        status: "Approved",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "6",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Aug 26, 2026, 02:44 PM",
+        displayTo: "Aug 29, 2026, 06:00 PM",
+        duration: "3 days",
+        remarks: "Going home",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Approved",
+        status: "Completed",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "7",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Aug 15, 2026, 09:00 AM",
+        displayTo: "Aug 21, 2026, 06:00 PM",
+        duration: "6 days",
+        remarks: "Vacation / Holiday",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Approved",
+        status: "Completed",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      },
+      {
+        id: "8",
+        leaveType: "Leave",
+        type: "Leave",
+        displayFrom: "Aug 01, 2026, 09:00 AM",
+        displayTo: "Aug 07, 2026, 06:00 PM",
+        duration: "6 days",
+        remarks: "Personal work",
+        company: "",
+        venue: "",
+        gateOut: "-",
+        gateIn: "-",
+        parentStatus: "Approved",
+        status: "Completed",
+        mentorName: "IT2078 - Mr.PRABHU P S",
+        wardenName: "BT11243 - Karthik M G"
+      }
+    ];
+  }
+  renderTable();
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// Render Table
+function renderTable() {
+  const query = (searchInput.value || '').trim().toLowerCase();
+  const filtered = leavesData.filter(item => {
+    return (
+      (item.leaveType || '').toLowerCase().includes(query) ||
+      (item.remarks || '').toLowerCase().includes(query) ||
+      (item.duration || '').toLowerCase().includes(query) ||
+      (item.status || '').toLowerCase().includes(query)
+    );
+  });
+
+  if (filtered.length === 0) {
+    tableBody.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+  emptyState.style.display = 'none';
+
+  tableBody.innerHTML = filtered.map(item => {
+    const isOD = (item.leaveType || '').toLowerCase().includes('onduty');
+    const typeLabel = isOD ? 'OD' : 'Leave';
+    const typePillClass = isOD ? 'pill-type-od' : 'pill-type-leave';
+    const parentClass = (item.parentStatus || '').toLowerCase() === 'approved' ? 'approved' : 'pending';
+    const statusClass = (item.status || '').toLowerCase() === 'completed' ? 'completed' : 'approved';
+
+    return `
+      <tr data-id="${escapeHtml(item.id)}">
+        <td>
+          <div class="leave-type-cell">
+            <span class="chevron-icon">›</span>
+            <span>${escapeHtml(item.leaveType)}</span>
+          </div>
+        </td>
+        <td>
+          <span class="pill ${typePillClass}">${typeLabel}</span>
+        </td>
+        <td>${escapeHtml(item.displayFrom || item.fromDate || '')}</td>
+        <td>${escapeHtml(item.displayTo || item.toDate || '')}</td>
+        <td>${escapeHtml(item.duration || '1 day')}</td>
+        <td>${escapeHtml(item.remarks || '')}</td>
+        <td>
+          <span class="pill pill-status ${parentClass}">${escapeHtml(item.parentStatus || 'Pending')}</span>
+        </td>
+        <td>
+          <span class="pill pill-status ${statusClass}">${escapeHtml(item.status || 'Approved')}</span>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Attach row click listeners
+  tableBody.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('click', () => {
+      const id = tr.getAttribute('data-id');
+      const item = leavesData.find(x => String(x.id) === String(id));
+      if (item) openDetailsModal(item);
+    });
+  });
+}
+
+searchInput.addEventListener('input', renderTable);
+
+// Open Details Modal
+function openDetailsModal(item) {
+  modalDetailsTitle.textContent = `Leave Details - ${item.leaveType || 'OnDuty - Offcampus Placement'}`;
+  detailLeaveType.textContent = item.leaveType || '-';
+  
+  const isOD = (item.leaveType || '').toLowerCase().includes('onduty');
+  detailTypeBadge.textContent = isOD ? 'OD' : 'Leave';
+  detailTypeBadge.className = `pill ${isOD ? 'pill-type-od' : 'pill-type-leave'}`;
+
+  detailFromDate.textContent = item.displayFrom || item.fromDate || '-';
+  detailToDate.textContent = item.displayTo || item.toDate || '-';
+  detailGateOut.textContent = item.gateOut || '-';
+  detailGateIn.textContent = item.gateIn || '-';
+  detailDuration.textContent = item.duration || '1 day';
+
+  const status = item.status || 'Approved';
+  detailStatusBadge.textContent = status;
+  detailStatusBadge.className = `pill pill-status ${status.toLowerCase() === 'completed' ? 'completed' : 'approved'}`;
+
+  detailRemarks.textContent = item.remarks || '-';
+  detailCompany.textContent = item.company || (isOD ? 'Codestax.Ai' : '-');
+  detailVenue.textContent = item.venue || (isOD ? 'Hostel' : '-');
+
+  detailMentorName.textContent = item.mentorName || 'IT2078 - Mr.PRABHU P S';
+  detailMentorApprovedBy.textContent = item.mentorName || 'IT2078 - Mr.PRABHU P S';
+  detailWardenName.textContent = item.wardenName || 'BT11243 - Karthik M G';
+  detailWardenApprovedBy.textContent = item.wardenName || 'BT11243 - Karthik M G';
+
+  detailsModalOverlay.classList.add('open');
+}
+
+function closeDetailsModal() {
+  detailsModalOverlay.classList.remove('open');
+}
+
+btnCloseDetails.addEventListener('click', closeDetailsModal);
+detailsModalOverlay.addEventListener('click', (e) => {
+  if (e.target === detailsModalOverlay) closeDetailsModal();
+});
+
+// Apply Modal Handlers
+function openApplyModal() {
+  applyForm.reset();
+  const todayStr = new Date().toISOString().split('T')[0];
+  document.getElementById('applyFromDate').value = todayStr;
+  document.getElementById('applyToDate').value = todayStr;
+  document.getElementById('applyFromTime').value = '08:00';
+  document.getElementById('applyToTime').value = '17:00';
+  odExtraFields.style.display = 'none';
+  applyModalOverlay.classList.add('open');
+}
+
+function closeApplyModal() {
+  applyModalOverlay.classList.remove('open');
+  applyForm.reset();
+}
+
+btnOpenApply.addEventListener('click', openApplyModal);
+bottomNavAdd.addEventListener('click', openApplyModal);
+btnCloseApply.addEventListener('click', closeApplyModal);
+btnCancelApply.addEventListener('click', closeApplyModal);
+applyModalOverlay.addEventListener('click', (e) => {
+  if (e.target === applyModalOverlay) closeApplyModal();
+});
+
+// Form Submit
+applyForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const leaveType = applyLeaveType.value;
+  const fromDate = document.getElementById('applyFromDate').value;
+  const toDate = document.getElementById('applyToDate').value;
+  const fromTime = document.getElementById('applyFromTime').value || '08:00';
+  const toTime = document.getElementById('applyToTime').value || '17:00';
+  const remarks = document.getElementById('applyRemarks').value.trim();
+  const company = document.getElementById('applyCompany')?.value?.trim() || '';
+  const venue = document.getElementById('applyVenue')?.value?.trim() || '';
+
+  if (toDate < fromDate) {
+    showToast('To Date cannot be before From Date.');
+    return;
+  }
+
+  const payload = {
+    leaveType,
+    fromDate,
+    toDate,
+    fromTime,
+    toTime,
+    remarks,
+    company,
+    venue
+  };
+
+  try {
+    const res = await fetch('/api/leaves', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error();
+    leavesData = await res.json();
+    closeApplyModal();
+    renderTable();
+    showToast('Leave request submitted successfully.');
+  } catch (err) {
+    // Local fallback
+    const isOD = leaveType.toLowerCase().includes('onduty');
+    const newLocalItem = {
+      id: Date.now().toString(),
+      leaveType,
+      type: isOD ? 'OD' : 'Leave',
+      displayFrom: formatDateTime(fromDate, fromTime),
+      displayTo: formatDateTime(toDate, toTime),
+      duration: '1 day',
+      remarks,
+      company: company || (isOD ? 'Codestax.Ai' : ''),
+      venue: venue || (isOD ? 'Hostel' : ''),
+      gateOut: '-',
+      gateIn: '-',
+      parentStatus: 'Pending',
+      status: 'Approved',
+      mentorName: 'IT2078 - Mr.PRABHU P S',
+      wardenName: 'BT11243 - Karthik M G'
+    };
+    leavesData.unshift(newLocalItem);
+    closeApplyModal();
+    renderTable();
+    showToast('Saved locally.');
+  }
+});
+
+// Headphone Support FAB
+document.getElementById('supportFab').addEventListener('click', () => {
+  showToast('Need help? Contact PCDP Support Desk at support@pcdp.edu');
+});
+
+// Initial Load
+loadLeaves();
+</script>
+</body>
+</html>
